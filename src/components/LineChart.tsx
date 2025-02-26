@@ -1,6 +1,14 @@
 import React from 'react';
 import { View, Animated, Dimensions, TouchableOpacity } from 'react-native';
-import Svg, { Path, Circle, Line, Text as SvgText, LinearGradient, Defs, Stop } from 'react-native-svg';
+import Svg, {
+  Path,
+  Circle,
+  Line,
+  Text as SvgText,
+  LinearGradient,
+  Defs,
+  Stop,
+} from 'react-native-svg';
 import type { LineChartProps, LineChartDataPoint } from '../types';
 import type { TextProps } from 'react-native-svg';
 
@@ -73,12 +81,18 @@ export const LineChart: React.FC<LineChartProps> = ({
   // Merge default styles with user-provided styles
   const mergedLabelStyle = { ...defaultLabelStyle, ...(labelStyle as object) };
   const mergedValueStyle = { ...defaultValueStyle, ...(valueStyle as object) };
-  const mergedYAxisLabelStyle = { ...defaultYAxisLabelStyle, ...(yAxisLabelStyle as object) };
-  const mergedXAxisLabelStyle = { ...defaultXAxisLabelStyle, ...(xAxisLabelStyle as object) };
+  const mergedYAxisLabelStyle = {
+    ...defaultYAxisLabelStyle,
+    ...(yAxisLabelStyle as object),
+  };
+  const mergedXAxisLabelStyle = {
+    ...defaultXAxisLabelStyle,
+    ...(xAxisLabelStyle as object),
+  };
 
   // Calculate min and max values
-  const minValue = yAxisRange?.min ?? Math.min(...data.map(d => d.value));
-  const maxValue = yAxisRange?.max ?? Math.max(...data.map(d => d.value));
+  const minValue = yAxisRange?.min ?? Math.min(...data.map((d) => d.value));
+  const maxValue = yAxisRange?.max ?? Math.max(...data.map((d) => d.value));
   const valueRange = maxValue - minValue;
 
   // Animation value
@@ -95,12 +109,13 @@ export const LineChart: React.FC<LineChartProps> = ({
     } else {
       animationProgress.setValue(1);
     }
-  }, [data, animated, animationDuration]);
+  }, [data, animated, animationDuration, animationProgress]);
 
   // Generate points
   const points = data.map((point, index) => {
     const x = (chartWidth / (data.length - 1)) * index + paddingHorizontal;
-    const y = chartHeight - ((point.value - minValue) / valueRange) * chartHeight;
+    const y =
+      chartHeight - ((point.value - minValue) / valueRange) * chartHeight;
     return { x, y, ...point };
   });
 
@@ -162,7 +177,7 @@ export const LineChart: React.FC<LineChartProps> = ({
               {gradientColors.map((color, index) => (
                 <Stop
                   key={index}
-                  offset={index === 0 ? "0" : "1"}
+                  offset={index === 0 ? '0' : '1'}
                   stopColor={color}
                   stopOpacity="1"
                 />
@@ -191,7 +206,8 @@ export const LineChart: React.FC<LineChartProps> = ({
             })}
             {/* Vertical lines */}
             {Array.from({ length: verticalLines }).map((_, i) => {
-              const x = (chartWidth / (verticalLines - 1)) * i + paddingHorizontal;
+              const x =
+                (chartWidth / (verticalLines - 1)) * i + paddingHorizontal;
               return (
                 <Line
                   key={`v-${i}`}
@@ -211,7 +227,9 @@ export const LineChart: React.FC<LineChartProps> = ({
         {showArea && (
           <AnimatedPath
             d={areaPath}
-            fill={showGradient ? "url(#areaGradient)" : points[0]?.color || "#000"}
+            fill={
+              showGradient ? 'url(#areaGradient)' : points[0]?.color || '#000'
+            }
             fillOpacity={areaOpacity}
           />
         )}
@@ -219,7 +237,7 @@ export const LineChart: React.FC<LineChartProps> = ({
         {/* Line */}
         <AnimatedPath
           d={linePath}
-          stroke={points[0]?.color || "#000"}
+          stroke={points[0]?.color || '#000'}
           strokeWidth={lineWidth}
           fill="none"
         />
@@ -237,11 +255,11 @@ export const LineChart: React.FC<LineChartProps> = ({
                   cx={point.x}
                   cy={point.y}
                   r={dotSize}
-                  fill={point.dotColor || point.color || "#000"}
+                  fill={point.dotColor || point.color || '#000'}
                 />
               </TouchableOpacity>
             )}
-            
+
             {/* Data point labels */}
             {showLabels && (
               <SvgText
@@ -253,7 +271,7 @@ export const LineChart: React.FC<LineChartProps> = ({
                 {point.label}
               </SvgText>
             )}
-            
+
             {/* Data point values */}
             {showValues && (
               <SvgText
@@ -269,35 +287,37 @@ export const LineChart: React.FC<LineChartProps> = ({
         ))}
 
         {/* Y-axis */}
-        {showYAxis && Array.from({ length: horizontalLines }).map((_, i) => {
-          const value = maxValue - (valueRange / (horizontalLines - 1)) * i;
-          const y = (chartHeight / (horizontalLines - 1)) * i;
-          return (
-            <SvgText
-              key={`y-${i}`}
-              x={paddingHorizontal - 5}
-              y={y + 4}
-              textAnchor="end"
-              {...mergedYAxisLabelStyle}
-            >
-              {valueFormatter(value)}
-            </SvgText>
-          );
-        })}
+        {showYAxis &&
+          Array.from({ length: horizontalLines }).map((_, i) => {
+            const value = maxValue - (valueRange / (horizontalLines - 1)) * i;
+            const y = (chartHeight / (horizontalLines - 1)) * i;
+            return (
+              <SvgText
+                key={`y-${i}`}
+                x={paddingHorizontal - 5}
+                y={y + 4}
+                textAnchor="end"
+                {...mergedYAxisLabelStyle}
+              >
+                {valueFormatter(value)}
+              </SvgText>
+            );
+          })}
 
         {/* X-axis */}
-        {showXAxis && points.map((point, index) => (
-          <SvgText
-            key={`x-${index}`}
-            x={point.x}
-            y={chartHeight + 20}
-            textAnchor="middle"
-            {...mergedXAxisLabelStyle}
-          >
-            {point.label}
-          </SvgText>
-        ))}
+        {showXAxis &&
+          points.map((point, index) => (
+            <SvgText
+              key={`x-${index}`}
+              x={point.x}
+              y={chartHeight + 20}
+              textAnchor="middle"
+              {...mergedXAxisLabelStyle}
+            >
+              {point.label}
+            </SvgText>
+          ))}
       </Svg>
     </View>
   );
-}; 
+};

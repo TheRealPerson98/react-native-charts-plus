@@ -4,8 +4,6 @@
 [![npm downloads](https://img.shields.io/npm/dm/react-native-charts-plus.svg)](https://www.npmjs.com/package/react-native-charts-plus)
 [![license](https://img.shields.io/github/license/TheRealPerson98/react-native-charts-plus.svg)](https://github.com/TheRealPerson98/react-native-charts-plus/blob/main/LICENSE)
 [![platform](https://img.shields.io/badge/platform-ios%20%7C%20android-blue.svg)](https://github.com/TheRealPerson98/react-native-charts-plus)
-[![node](https://img.shields.io/node/v/react-native-charts-plus.svg)](https://github.com/TheRealPerson98/react-native-charts-plus)
-
 A beautiful, easy-to-use chart library for React Native applications.
 
 Created by Jace Sleeman | Person98 LLC
@@ -36,6 +34,8 @@ yarn add react-native-charts-plus
 - **Ring Chart**: Multiple concentric rings showing progress or completion
 - **Line Chart**: Line graphs with customizable curves and gradient fills
 - **Radar Chart**: Spider/radar charts for multi-variable data visualization
+- **Bubble Chart**: X-Y coordinate bubbles with size as third dimension
+- **Gauge Chart**: Semi-circular gauge/dial for displaying a single value
 
 ## Components
 
@@ -157,9 +157,27 @@ import { RingChart } from 'react-native-charts-plus';
 // Example usage
 const MyRingChart = () => {
   const data = [
-    { value: 75, total: 100, label: 'Project A', fullColor: '#FF5733', emptyColor: '#FFD6CC' },
-    { value: 45, total: 100, label: 'Project B', fullColor: '#33FF57', emptyColor: '#CCFFDB' },
-    { value: 90, total: 100, label: 'Project C', fullColor: '#3357FF', emptyColor: '#CCD6FF' },
+    {
+      value: 75,
+      total: 100,
+      label: 'Project A',
+      fullColor: '#FF5733',
+      emptyColor: '#FFD6CC',
+    },
+    {
+      value: 45,
+      total: 100,
+      label: 'Project B',
+      fullColor: '#33FF57',
+      emptyColor: '#CCFFDB',
+    },
+    {
+      value: 90,
+      total: 100,
+      label: 'Project C',
+      fullColor: '#3357FF',
+      emptyColor: '#CCD6FF',
+    },
   ];
 
   return (
@@ -175,7 +193,9 @@ const MyRingChart = () => {
       showLegend={true}
       legendPosition="bottom"
       onRingPress={(item, index) => {
-        console.log(`Ring ${index} pressed with value ${item.value}/${item.total}`);
+        console.log(
+          `Ring ${index} pressed with value ${item.value}/${item.total}`
+        );
       }}
     />
   );
@@ -265,7 +285,100 @@ const MyRadarChart = () => {
       showLegend={true}
       legendPosition="bottom"
       onPointPress={(item, seriesIndex, pointIndex) => {
-        console.log(`Point at series ${seriesIndex}, index ${pointIndex} pressed with value ${item.value}`);
+        console.log(
+          `Point at series ${seriesIndex}, index ${pointIndex} pressed with value ${item.value}`
+        );
+      }}
+    />
+  );
+};
+```
+
+### BubbleChart
+
+A component that displays data as bubbles on an X-Y coordinate system, with the size of each bubble representing a third dimension of data.
+
+```jsx
+import { BubbleChart } from 'react-native-charts-plus';
+
+// Example usage
+const MyBubbleChart = () => {
+  const data = [
+    { x: 10, y: 20, size: 30, label: 'Item A', color: '#FF5733' },
+    { x: 30, y: 40, size: 20, label: 'Item B', color: '#33FF57' },
+    { x: 50, y: 30, size: 40, label: 'Item C', color: '#3357FF' },
+    { x: 70, y: 50, size: 25, label: 'Item D', color: '#F3FF33' },
+    { x: 90, y: 10, size: 35, label: 'Item E', color: '#FF33F3' },
+  ];
+
+  return (
+    <BubbleChart
+      data={data}
+      width={350}
+      height={300}
+      showLabels={true}
+      showValues={true}
+      xAxisTitle="X Axis"
+      yAxisTitle="Y Axis"
+      valueFormatter={(x, y, size) => `(${x}, ${y}) - Size: ${size}`}
+      showGrid={true}
+      animated={true}
+      animationDuration={1000}
+      onBubblePress={(item, index) => {
+        console.log(`Bubble ${index} pressed with values (${item.x}, ${item.y}, ${item.size})`);
+      }}
+    />
+  );
+};
+```
+
+### GaugeChart
+
+A component that displays a single value on a semi-circular gauge, similar to a speedometer or dial.
+
+```jsx
+import { GaugeChart } from 'react-native-charts-plus';
+
+// Example usage
+const MyGaugeChart = () => {
+  const data = {
+    value: 75,
+    minValue: 0,
+    maxValue: 100,
+    label: 'Progress',
+    color: '#3357FF',
+    backgroundColor: '#E0E0E0',
+    valueColor: '#333333',
+  };
+
+  return (
+    <GaugeChart
+      data={data}
+      width={300}
+      height={200}
+      radius={120}
+      thickness={20}
+      showLabels={true}
+      showValues={true}
+      showMinMax={true}
+      valueFormatter={(value) => `${value}%`}
+      animated={true}
+      animationDuration={1000}
+      needleColor="#FF5733"
+      needleBaseColor="#333333"
+      needleBaseSize={15}
+      showSections={true}
+      sections={[
+        { value: 25, color: '#FF5733', label: 'Low' },
+        { value: 50, color: '#F3FF33', label: 'Medium' },
+        { value: 75, color: '#33FF57', label: 'Good' },
+        { value: 100, color: '#3357FF', label: 'Excellent' },
+      ]}
+      showTicks={true}
+      tickCount={5}
+      centerLabel="75%"
+      onPress={(item) => {
+        console.log(`Gauge pressed with value ${item.value}`);
       }}
     />
   );
@@ -317,6 +430,30 @@ interface RadarChartDataPoint {
   dotSize?: number;
   showDot?: boolean;
 }
+
+interface BubbleChartDataPoint {
+  x: number;
+  y: number;
+  size: number;
+  label: string;
+  color?: string;
+  borderColor?: string;
+  borderWidth?: number;
+}
+
+interface GaugeChartDataPoint {
+  value: number;
+  minValue?: number;
+  maxValue?: number;
+  label: string;
+  color?: string;
+  backgroundColor?: string;
+  valueColor?: string;
+}
+
+// Props interfaces are also available for each chart type:
+// BarChartProps, PercentageBarChartProps, PieChartProps, RingChartProps,
+// LineChartProps, RadarChartProps, BubbleChartProps, GaugeChartProps
 ```
 
 ## License

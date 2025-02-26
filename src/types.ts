@@ -211,7 +211,11 @@ export interface RadarChartProps {
   };
   animated?: boolean;
   animationDuration?: number;
-  onPointPress?: (item: RadarChartDataPoint, seriesIndex: number, pointIndex: number) => void;
+  onPointPress?: (
+    item: RadarChartDataPoint,
+    seriesIndex: number,
+    pointIndex: number
+  ) => void;
   showLegend?: boolean;
   legendPosition?: 'bottom' | 'right' | 'left' | 'top';
   legendStyle?: ViewStyle;
@@ -256,4 +260,94 @@ export interface LineChartProps {
   xAxisHeight?: number;
   horizontalLines?: number;
   verticalLines?: number;
+}
+
+export interface GaugeChartDataPoint {
+  value: number;
+  minValue?: number;
+  maxValue?: number;
+  label: string;
+  color?: string;
+  backgroundColor?: string;
+  valueColor?: string;
+}
+
+export interface BubbleChartDataPoint {
+  x: number;
+  y: number;
+  size: number;
+  label: string;
+  color?: string;
+  borderColor?: string;
+  borderWidth?: number;
+}
+
+export interface BubbleChartProps {
+  data: BubbleChartDataPoint[];
+  width?: number;
+  height?: number;
+  showLabels?: boolean;
+  showValues?: boolean;
+  xAxisTitle?: string;
+  yAxisTitle?: string;
+  valueFormatter?: (x: number, y: number, size: number) => string;
+  style?: ViewStyle;
+  labelStyle?: TextStyle;
+  valueStyle?: TextStyle;
+  xAxisLabelStyle?: TextStyle;
+  yAxisLabelStyle?: TextStyle;
+  bubbleStyle?: ViewStyle;
+  animated?: boolean;
+  animationDuration?: number;
+  showGrid?: boolean;
+  gridColor?: string;
+  gridOpacity?: number;
+  xAxisRange?: { min?: number; max?: number };
+  yAxisRange?: { min?: number; max?: number };
+  sizeRange?: { min?: number; max?: number };
+  showXAxis?: boolean;
+  showYAxis?: boolean;
+  horizontalLines?: number;
+  verticalLines?: number;
+  onBubblePress?: (item: BubbleChartDataPoint, index: number) => void;
+}
+
+export interface GaugeChartProps {
+  data: GaugeChartDataPoint;
+  width?: number;
+  height?: number;
+  radius?: number;
+  startAngle?: number;
+  endAngle?: number;
+  showLabels?: boolean;
+  showValues?: boolean;
+  showMinMax?: boolean;
+  valueFormatter?: (value: number) => string;
+  style?: ViewStyle;
+  labelStyle?: TextStyle;
+  valueStyle?: TextStyle;
+  minMaxStyle?: TextStyle;
+  animated?: boolean;
+  animationDuration?: number;
+  thickness?: number;
+  needleColor?: string;
+  needleBaseColor?: string;
+  needleBaseSize?: number;
+  showSections?: boolean;
+  sections?: Array<{
+    value: number;
+    color: string;
+    label?: string;
+  }>;
+  showTicks?: boolean;
+  tickCount?: number;
+  tickColor?: string;
+  tickSize?: number;
+  tickLabelStyle?: TextStyle;
+  showTickLabels?: boolean;
+  centerLabel?: string;
+  centerLabelStyle?: TextStyle;
+  centerLabelBackgroundColor?: string;
+  centerLabelBorderRadius?: number;
+  onPress?: (item: GaugeChartDataPoint) => void;
 }

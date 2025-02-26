@@ -35,7 +35,7 @@ export const BarChart: FC<BarChartProps> = ({
 }) => {
   // Find the maximum value to scale the bars
   const maxValue = Math.max(...data.map((item: DataPoint) => item.value));
-  
+
   // Create animated values for each bar
   const animatedValues = useRef<Animated.Value[]>(
     data.map(() => new Animated.Value(0))
@@ -66,7 +66,7 @@ export const BarChart: FC<BarChartProps> = ({
       <View style={styles.chartContainer}>
         {data.map((item: DataPoint, index: number) => {
           const barHeight = (item.value / maxValue) * height * 0.8;
-          
+
           return (
             <View key={`${item.label}-${index}`} style={styles.barContainer}>
               <TouchableOpacity
@@ -78,10 +78,11 @@ export const BarChart: FC<BarChartProps> = ({
                     styles.bar,
                     {
                       width: barWidth,
-                      height: animatedValues[index]?.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, barHeight],
-                      }) || 0,
+                      height:
+                        animatedValues[index]?.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [0, barHeight],
+                        }) || 0,
                       backgroundColor: item.color || '#3498db',
                       marginHorizontal: spacing / 2,
                     },
@@ -89,13 +90,13 @@ export const BarChart: FC<BarChartProps> = ({
                   ]}
                 />
               </TouchableOpacity>
-              
+
               {showValues && (
                 <Text style={[styles.value, valueStyle]}>
                   {valueFormatter(item.value)}
                 </Text>
               )}
-              
+
               {showLabels && (
                 <Text
                   style={[styles.label, labelStyle]}
@@ -142,4 +143,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#666',
   },
-}); 
+});

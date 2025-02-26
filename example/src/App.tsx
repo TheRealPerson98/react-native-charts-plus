@@ -1,15 +1,49 @@
 import { View, StyleSheet, ScrollView, Text, SafeAreaView } from 'react-native';
-import { RingChart, PieChart, LineChart, RadarChart } from 'react-native-charts-plus';
-import type { LineChartDataPoint, RadarChartDataPoint } from 'react-native-charts-plus';
+import {
+  RingChart,
+  PieChart,
+  LineChart,
+  RadarChart,
+  GaugeChart,
+  BubbleChart,
+} from 'react-native-charts-plus';
+import type {
+  LineChartDataPoint,
+  RadarChartDataPoint,
+  BubbleChartDataPoint,
+} from 'react-native-charts-plus';
 
 export default function App() {
-
   // Ring chart data - Clean left labels
   const cleanLeftLabelsData = [
-    { value: 90, total: 100, label: 'Design', fullColor: '#8E44AD', emptyColor: '#D2B4DE' },
-    { value: 58, total: 100, label: 'Development', fullColor: '#2980B9', emptyColor: '#AED6F1' },
-    { value: 90, total: 100, label: 'Testing', fullColor: '#16A085', emptyColor: '#A3E4D7' },
-    { value: 89, total: 100, label: 'Deployment', fullColor: '#F39C12', emptyColor: '#FAD7A0' },
+    {
+      value: 90,
+      total: 100,
+      label: 'Design',
+      fullColor: '#8E44AD',
+      emptyColor: '#D2B4DE',
+    },
+    {
+      value: 58,
+      total: 100,
+      label: 'Development',
+      fullColor: '#2980B9',
+      emptyColor: '#AED6F1',
+    },
+    {
+      value: 90,
+      total: 100,
+      label: 'Testing',
+      fullColor: '#16A085',
+      emptyColor: '#A3E4D7',
+    },
+    {
+      value: 89,
+      total: 100,
+      label: 'Deployment',
+      fullColor: '#F39C12',
+      emptyColor: '#FAD7A0',
+    },
   ];
 
   // Pie chart data with modern gradient-like colors
@@ -18,7 +52,7 @@ export default function App() {
     { value: 25, label: 'Desktop', color: '#4ECDC4' },
     { value: 20, label: 'Tablet', color: '#45B7D1' },
     { value: 15, label: 'TV', color: '#96CEB4' },
-    { value: 5, label: 'Others', color: '#FFEEAD' }
+    { value: 5, label: 'Others', color: '#FFEEAD' },
   ];
 
   // Line chart data with monthly performance metrics
@@ -37,7 +71,12 @@ export default function App() {
     [
       { value: 80, label: 'Sales', color: '#4C51BF', fillColor: '#4C51BF' },
       { value: 90, label: 'Marketing', color: '#4C51BF', fillColor: '#4C51BF' },
-      { value: 70, label: 'Development', color: '#4C51BF', fillColor: '#4C51BF' },
+      {
+        value: 70,
+        label: 'Development',
+        color: '#4C51BF',
+        fillColor: '#4C51BF',
+      },
       { value: 85, label: 'Support', color: '#4C51BF', fillColor: '#4C51BF' },
       { value: 75, label: 'Finance', color: '#4C51BF', fillColor: '#4C51BF' },
       { value: 65, label: 'Product', color: '#4C51BF', fillColor: '#4C51BF' },
@@ -46,11 +85,110 @@ export default function App() {
     [
       { value: 65, label: 'Sales', color: '#ED8936', fillColor: '#ED8936' },
       { value: 75, label: 'Marketing', color: '#ED8936', fillColor: '#ED8936' },
-      { value: 55, label: 'Development', color: '#ED8936', fillColor: '#ED8936' },
+      {
+        value: 55,
+        label: 'Development',
+        color: '#ED8936',
+        fillColor: '#ED8936',
+      },
       { value: 70, label: 'Support', color: '#ED8936', fillColor: '#ED8936' },
       { value: 60, label: 'Finance', color: '#ED8936', fillColor: '#ED8936' },
       { value: 50, label: 'Product', color: '#ED8936', fillColor: '#ED8936' },
-    ]
+    ],
+  ];
+
+  // Gauge chart data - Performance metrics
+  const gaugeChartData = {
+    value: 72,
+    minValue: 0,
+    maxValue: 100,
+    label: 'Performance',
+    color: '#4C51BF',
+    backgroundColor: '#E2E8F0',
+    valueColor: '#2D3748',
+  };
+
+  const gaugeSections = [
+    { value: 30, color: '#F56565', label: 'Low' },
+    { value: 70, color: '#F6AD55', label: 'Medium' },
+    { value: 100, color: '#68D391', label: 'High' },
+  ];
+
+  // SVG-specific styles (not compatible with StyleSheet)
+  const svgStyles = {
+    polygonStyle: {
+      strokeWidth: 2,
+      strokeOpacity: 1,
+      fillOpacity: 0.3,
+    },
+    axisStyle: {
+      stroke: '#CBD5E0',
+      strokeWidth: 1,
+      strokeOpacity: 0.7,
+    },
+    gridStyle: {
+      stroke: '#E2E8F0',
+      strokeWidth: 1,
+      strokeOpacity: 0.5,
+      strokeDasharray: '4,4',
+    },
+    backgroundStyle: {
+      fill: '#F7FAFC',
+      fillOpacity: 0.3,
+    },
+    dotStyle: {
+      fill: '#FFFFFF',
+      strokeWidth: 1.5,
+    },
+  };
+
+  // Bubble chart data - Product comparison
+  const bubbleChartData = [
+    {
+      x: 10,
+      y: 30,
+      size: 40,
+      label: 'Product A',
+      color: '#FF6384',
+      borderColor: '#FF4365',
+      borderWidth: 2,
+    },
+    {
+      x: 25,
+      y: 60,
+      size: 25,
+      label: 'Product B',
+      color: '#36A2EB',
+      borderColor: '#2187D1',
+      borderWidth: 2,
+    },
+    {
+      x: 40,
+      y: 20,
+      size: 35,
+      label: 'Product C',
+      color: '#FFCE56',
+      borderColor: '#E6B73C',
+      borderWidth: 2,
+    },
+    {
+      x: 55,
+      y: 45,
+      size: 20,
+      label: 'Product D',
+      color: '#4BC0C0',
+      borderColor: '#31A6A6',
+      borderWidth: 2,
+    },
+    {
+      x: 70,
+      y: 75,
+      size: 30,
+      label: 'Product E',
+      color: '#9966FF',
+      borderColor: '#7F4CE5',
+      borderWidth: 2,
+    },
   ];
 
   return (
@@ -70,21 +208,12 @@ export default function App() {
               showLegend={true}
               legendPosition="left"
               showConnectingLines={false}
-              legendStyle={{
-                backgroundColor: 'transparent'
-              }}
-              legendItemStyle={{
-                backgroundColor: 'transparent',
-                marginBottom: 15
-              }}
-              legendLabelStyle={{
-                fontSize: 14,
-                color: '#555555',
-                fontWeight: '500'
-              }}
+              legendStyle={styles.transparentLegend}
+              legendItemStyle={styles.transparentLegendItem}
+              legendLabelStyle={styles.legendLabel}
               onRingPress={(item, index) => {
                 console.log(`Ring ${index} pressed with value ${item.value}`);
-              }} 
+              }}
             />
           </View>
 
@@ -106,39 +235,17 @@ export default function App() {
               labelBackgroundColor="rgba(255,255,255,0.95)"
               labelBackgroundOpacity={0.95}
               labelBackgroundBorderRadius={6}
-              labelStyle={{
-                fontSize: 14,
-                fontWeight: '600',
-                color: '#4A5568'
-              }}
-              valueStyle={{
-                fontSize: 12,
-                fontWeight: '500',
-                color: '#718096'
-              }}
+              labelStyle={styles.pieLabel}
+              valueStyle={styles.pieValue}
               centerLabel="Device\nUsage"
-              centerLabelStyle={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: '#4A5568',
-                textAlign: 'center'
-              }}
+              centerLabelStyle={styles.centerLabel}
               centerLabelBackgroundColor="#ffffff"
               centerLabelBorderRadius={40}
               showLegend={true}
               legendPosition="right"
-              legendStyle={{
-                backgroundColor: 'transparent'
-              }}
-              legendItemStyle={{
-                backgroundColor: 'transparent',
-                marginBottom: 12
-              }}
-              legendLabelStyle={{
-                fontSize: 13,
-                color: '#4A5568',
-                fontWeight: '500'
-              }}
+              legendStyle={styles.transparentLegend}
+              legendItemStyle={styles.pieLegendItem}
+              legendLabelStyle={styles.pieLegendLabel}
               onSlicePress={(item, index) => {
                 console.log(`Slice ${index} pressed with value ${item.value}`);
               }}
@@ -165,29 +272,18 @@ export default function App() {
               animationDuration={1500}
               curveType="natural"
               showGradient={true}
-              gradientColors={['rgba(108, 92, 231, 0.8)', 'rgba(108, 92, 231, 0)']}
+              gradientColors={[
+                'rgba(108, 92, 231, 0.8)',
+                'rgba(108, 92, 231, 0)',
+              ]}
               showYAxis={true}
               showXAxis={true}
               horizontalLines={5}
               verticalLines={6}
-              yAxisLabelStyle={{
-                fontSize: 12,
-                color: '#718096',
-              }}
-              xAxisLabelStyle={{
-                fontSize: 12,
-                color: '#718096',
-              }}
-              labelStyle={{
-                fontSize: 12,
-                color: '#4A5568',
-                fontWeight: '500'
-              }}
-              valueStyle={{
-                fontSize: 11,
-                color: '#718096',
-                fontWeight: '400'
-              }}
+              yAxisLabelStyle={styles.yAxisLabel}
+              xAxisLabelStyle={styles.xAxisLabel}
+              labelStyle={styles.lineLabel}
+              valueStyle={styles.lineValue}
               onPointPress={(item: LineChartDataPoint, index: number) => {
                 console.log(`Point ${index} pressed with value ${item.value}`);
               }}
@@ -209,35 +305,89 @@ export default function App() {
               valueFormatter={(value: number) => `${value}%`}
               animated={true}
               animationDuration={1500}
-              polygonStyle={{
-                strokeWidth: 2,
-                strokeOpacity: 1,
-                fillOpacity: 0.3,
+              polygonStyle={svgStyles.polygonStyle}
+              labelStyle={styles.radarLabel}
+              axisStyle={svgStyles.axisStyle}
+              gridStyle={svgStyles.gridStyle}
+              backgroundStyle={svgStyles.backgroundStyle}
+              dotStyle={svgStyles.dotStyle}
+              onPointPress={(
+                item: RadarChartDataPoint,
+                seriesIndex: number,
+                pointIndex: number
+              ) => {
+                console.log(
+                  `Point ${pointIndex} in series ${seriesIndex} pressed with value ${item.value}`
+                );
               }}
-              labelStyle={{
-                fontWeight: '500',
+            />
+          </View>
+
+          <Text style={styles.title}>Performance Gauge</Text>
+          <View style={styles.gaugeContainer}>
+            <GaugeChart
+              data={gaugeChartData}
+              width={350}
+              height={300}
+              radius={120}
+              startAngle={135}
+              endAngle={405}
+              showLabels={false}
+              showValues={false}
+              showMinMax={true}
+              valueFormatter={(value) => `${value}%`}
+              animated={true}
+              animationDuration={1500}
+              thickness={25}
+              needleColor="#E53E3E"
+              needleBaseColor="#718096"
+              needleBaseSize={15}
+              showSections={true}
+              sections={gaugeSections}
+              showTicks={true}
+              tickCount={5}
+              tickColor="#CBD5E0"
+              tickSize={10}
+              showTickLabels={true}
+              centerLabel=""
+              centerLabelStyle={styles.centerLabel}
+              centerLabelBackgroundColor="#FFFFFF"
+              centerLabelBorderRadius={20}
+              onPress={(item) => {
+                console.log(`Gauge pressed with value ${item.value}`);
               }}
-              axisStyle={{
-                stroke: '#CBD5E0',
-                strokeWidth: 1,
-                strokeOpacity: 0.7,
-              }}
-              gridStyle={{
-                stroke: '#E2E8F0',
-                strokeWidth: 1,
-                strokeOpacity: 0.5,
-                strokeDasharray: '4,4',
-              }}
-              backgroundStyle={{
-                fill: '#F7FAFC',
-                fillOpacity: 0.3,
-              }}
-              dotStyle={{
-                fill: '#FFFFFF',
-                strokeWidth: 1.5,
-              }}
-              onPointPress={(item: RadarChartDataPoint, seriesIndex: number, pointIndex: number) => {
-                console.log(`Point ${pointIndex} in series ${seriesIndex} pressed with value ${item.value}`);
+            />
+          </View>
+
+          <Text style={styles.title}>Product Comparison</Text>
+          <View style={styles.bubbleContainer}>
+            <BubbleChart
+              data={bubbleChartData}
+              width={350}
+              height={350}
+              showLabels={true}
+              showValues={false}
+              xAxisTitle="Price ($)"
+              yAxisTitle="Quality Score"
+              valueFormatter={(x, y, size) =>
+                `Price: $${x}, Quality: ${y}, Market: ${size}%`
+              }
+              animated={true}
+              animationDuration={1500}
+              showGrid={true}
+              gridColor="#E0E0E0"
+              gridOpacity={0.5}
+              showXAxis={true}
+              showYAxis={true}
+              horizontalLines={5}
+              verticalLines={5}
+              xAxisRange={{ min: 0, max: 80 }}
+              yAxisRange={{ min: 0, max: 100 }}
+              sizeRange={{ min: 15, max: 50 }}
+              onBubblePress={(item: BubbleChartDataPoint, index: number) => {
+                console.log(
+                  `Bubble ${index} pressed with values (${item.x}, ${item.y}, ${item.size})`
+                );
               }}
             />
           </View>
@@ -275,6 +425,11 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     alignItems: 'center',
   },
+  gaugeContainer: {
+    height: 350,
+    marginVertical: 20,
+    alignItems: 'center',
+  },
   sectionTitle: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -290,5 +445,68 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
     color: '#2D3748',
+  },
+  transparentLegend: {
+    backgroundColor: 'transparent',
+  },
+  transparentLegendItem: {
+    backgroundColor: 'transparent',
+    marginBottom: 15,
+  },
+  legendLabel: {
+    fontSize: 14,
+    color: '#555555',
+    fontWeight: '500',
+  },
+  pieLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#4A5568',
+  },
+  pieValue: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#718096',
+  },
+  centerLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4A5568',
+    textAlign: 'center',
+  },
+  pieLegendItem: {
+    backgroundColor: 'transparent',
+    marginBottom: 12,
+  },
+  pieLegendLabel: {
+    fontSize: 13,
+    color: '#4A5568',
+    fontWeight: '500',
+  },
+  yAxisLabel: {
+    fontSize: 12,
+    color: '#718096',
+  },
+  xAxisLabel: {
+    fontSize: 12,
+    color: '#718096',
+  },
+  lineLabel: {
+    fontSize: 12,
+    color: '#4A5568',
+    fontWeight: '500',
+  },
+  lineValue: {
+    fontSize: 11,
+    color: '#718096',
+    fontWeight: '400',
+  },
+  radarLabel: {
+    fontWeight: '500',
+  },
+  bubbleContainer: {
+    height: 400,
+    marginVertical: 20,
+    alignItems: 'center',
   },
 });

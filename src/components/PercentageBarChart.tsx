@@ -29,7 +29,10 @@ export const PercentageBarChart: FC<PercentageBarChartProps> = ({
   onSlicePress,
 }) => {
   // Calculate total for percentage calculations and memoize the result
-  const total = useMemo(() => data.reduce((sum, item) => sum + item.value, 0), [data]);
+  const total = useMemo(
+    () => data.reduce((sum, item) => sum + item.value, 0),
+    [data]
+  );
 
   // Create animated values for each bar
   const animatedValues = useRef(data.map(() => new Animated.Value(0))).current;
@@ -73,20 +76,30 @@ export const PercentageBarChart: FC<PercentageBarChartProps> = ({
             if (!animatedValues[index]) {
               return null;
             }
-                
+
             const animatedWidth = animatedValues[index].interpolate({
               inputRange: [0, 1],
               outputRange: ['0%', `${dataItem.percentage * 100}%`],
             });
 
             return (
-              <View key={`${dataItem.item.label}-${index}`} style={styles.barItem}>
+              <View
+                key={`${dataItem.item.label}-${index}`}
+                style={styles.barItem}
+              >
                 <TouchableOpacity
                   activeOpacity={onSlicePress ? 0.7 : 1}
-                  onPress={() => onSlicePress && onSlicePress(dataItem.item, index)}
+                  onPress={() =>
+                    onSlicePress && onSlicePress(dataItem.item, index)
+                  }
                 >
                   <View style={styles.barRow}>
-                    <View style={[styles.colorBox, { backgroundColor: dataItem.color }]} />
+                    <View
+                      style={[
+                        styles.colorBox,
+                        { backgroundColor: dataItem.color },
+                      ]}
+                    />
                     <View style={styles.textContainer}>
                       {showLabels && (
                         <Text style={[styles.label, labelStyle]}>
@@ -101,7 +114,13 @@ export const PercentageBarChart: FC<PercentageBarChartProps> = ({
                       )}
                     </View>
                     <Animated.View
-                      style={[styles.percentageBar, { backgroundColor: dataItem.color, width: animatedWidth }]}
+                      style={[
+                        styles.percentageBar,
+                        {
+                          backgroundColor: dataItem.color,
+                          width: animatedWidth,
+                        },
+                      ]}
                     />
                   </View>
                 </TouchableOpacity>
