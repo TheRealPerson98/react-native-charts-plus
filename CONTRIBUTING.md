@@ -2,6 +2,8 @@
 
 Contributions are always welcome, no matter how large or small!
 
+This project is owned and maintained by Person98 LLC (Jace Sleeman).
+
 We want this community to be friendly and respectful to each other. Please follow it in all your interactions with the project. Before contributing, please read the [code of conduct](./CODE_OF_CONDUCT.md).
 
 ## Development workflow
@@ -122,3 +124,7 @@ When you're sending a pull request:
 - Review the documentation to make sure it looks good.
 - Follow the pull request template when opening a pull request.
 - For pull requests that change the API or implementation, discuss with maintainers first by opening an issue.
+
+## Copyright
+
+Copyright © 2025 Person98 LLC (Jace Sleeman)

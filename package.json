@@ -1,7 +1,7 @@
 {
   "name": "react-native-charts-plus",
-  "version": "0.1.0",
-  "description": "NOTHING",
+  "version": "0.1.2",
+  "description": "A beautiful and customizable chart library for React Native with support for various chart types",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
@@ -54,7 +54,7 @@
     "type": "git",
     "url": "git+https://github.com/TheRealPerson98/react-native-charts-plus.git"
   },
-  "author": "TheRealPerson98 <jacesleeman603@gmail.com> (https://github.com/TheRealPerson98)",
+  "author": "Jace Sleeman <Person98@Person98.com> (https://github.com/TheRealPerson98)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/TheRealPerson98/react-native-charts-plus/issues"
@@ -68,6 +68,7 @@
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native/eslint-config": "^0.73.1",
     "@release-it/conventional-changelog": "^9.0.2",
+    "@types/d3-shape": "^3.1.7",
     "@types/jest": "^29.5.5",
     "@types/react": "^18.2.44",
     "commitlint": "^17.0.2",
@@ -80,6 +81,7 @@
     "react": "18.3.1",
     "react-native": "0.76.7",
     "react-native-builder-bob": "^0.37.0",
+    "react-native-svg": "^15.11.2",
     "release-it": "^17.10.0",
     "typescript": "^5.2.2"
   },
@@ -88,7 +90,8 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-svg": ">=12.0.0"
   },
   "workspaces": [
     "example"
@@ -183,5 +186,8 @@
     "languages": "js",
     "type": "library",
     "version": "0.48.3"
+  },
+  "dependencies": {
+    "d3-shape": "^3.2.0"
   }
 }
