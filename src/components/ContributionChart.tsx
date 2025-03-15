@@ -166,6 +166,23 @@ export const ContributionChart: FC<ContributionChartProps> = ({
                     const dataIndex = weekIndex * 7 + dayIndex;
                     const isValidData = day && day.value !== undefined;
 
+                    // Create cell style
+                    const cellStyle = {
+                      ...styles.cell,
+                      width: cellSize,
+                      height: cellSize,
+                      margin: cellSpacing / 2,
+                      borderRadius: cellBorderRadius,
+                      backgroundColor: isValidData
+                        ? getColorForValue(day.value)
+                        : 'transparent',
+                    };
+
+                    // Create animation style
+                    const animationStyle = {
+                      opacity: isValidData ? animatedValues[dataIndex] : 0,
+                    };
+
                     return (
                       <TouchableOpacity
                         key={dayIndex}
@@ -182,26 +199,7 @@ export const ContributionChart: FC<ContributionChartProps> = ({
                           }
                         }}
                       >
-                        <Animated.View
-                          style={[
-                            styles.cell,
-                            {
-                              width: cellSize,
-                              height: cellSize,
-                              margin: cellSpacing / 2,
-                              borderRadius: cellBorderRadius,
-                              backgroundColor: isValidData
-                                ? getColorForValue(day.value)
-                                : 'transparent',
-                              opacity: isValidData
-                                ? animatedValues[dataIndex]?.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [0, 1],
-                                  })
-                                : 0,
-                            },
-                          ]}
-                        />
+                        <Animated.View style={[cellStyle, animationStyle]} />
                       </TouchableOpacity>
                     );
                   })}
