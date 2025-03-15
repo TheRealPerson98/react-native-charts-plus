@@ -6,11 +6,13 @@ import {
   RadarChart,
   GaugeChart,
   BubbleChart,
+  ContributionChart,
 } from 'react-native-charts-plus';
 import type {
   LineChartDataPoint,
   RadarChartDataPoint,
   BubbleChartDataPoint,
+  ContributionDataPoint,
 } from 'react-native-charts-plus';
 
 export default function App() {
@@ -190,6 +192,86 @@ export default function App() {
       borderWidth: 2,
     },
   ];
+
+  // Generate sample data for the past year for the ContributionChart
+  const generateContributionData = () => {
+    const data: ContributionDataPoint[] = [];
+    const today = new Date();
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(today.getFullYear() - 1);
+    
+    // Loop through each day in the past year
+    for (let d = new Date(oneYearAgo); d <= today; d.setDate(d.getDate() + 1)) {
+      // Generate a random value (0-15) with higher probability of lower values
+      const rand = Math.random();
+      let value = 0;
+      
+      if (rand > 0.6) value = Math.floor(Math.random() * 5) + 1; // 1-5 (40% chance)
+      if (rand > 0.85) value = Math.floor(Math.random() * 5) + 5; // 5-10 (15% chance)
+      if (rand > 0.95) value = Math.floor(Math.random() * 5) + 10; // 10-15 (5% chance)
+      
+      // Format the date as YYYY-MM-DD
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const dateString = `${year}-${month}-${day}`;
+      
+      data.push({
+        value,
+        date: dateString,
+      });
+    }
+    
+    return data;
+  };
+
+  const contributionData = generateContributionData();
+
+  // Generate a pattern-based contribution data for the custom chart
+  const generatePatternContributionData = () => {
+    const data: ContributionDataPoint[] = [];
+    const today = new Date();
+    const sixMonthsAgo = new Date(today);
+    sixMonthsAgo.setMonth(today.getMonth() - 6);
+    
+    // Loop through each day in the past 6 months
+    for (let d = new Date(sixMonthsAgo); d <= today; d.setDate(d.getDate() + 1)) {
+      // Generate values based on patterns
+      let value = 0;
+      
+      // Higher values on weekends
+      const dayOfWeek = d.getDay();
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        value = Math.floor(Math.random() * 10) + 5; // 5-15 on weekends
+      } 
+      // Medium values on Wednesdays
+      else if (dayOfWeek === 3) {
+        value = Math.floor(Math.random() * 7) + 2; // 2-9 on Wednesdays
+      }
+      // Lower values on other days
+      else {
+        // 70% chance of activity on other days
+        if (Math.random() > 0.3) {
+          value = Math.floor(Math.random() * 5) + 1; // 1-5 on other days
+        }
+      }
+      
+      // Format the date as YYYY-MM-DD
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const dateString = `${year}-${month}-${day}`;
+      
+      data.push({
+        value,
+        date: dateString,
+      });
+    }
+    
+    return data;
+  };
+
+  const patternContributionData = generatePatternContributionData();
 
   return (
     <SafeAreaView style={styles.scrollView}>
@@ -391,6 +473,56 @@ export default function App() {
               }}
             />
           </View>
+
+          <Text style={styles.title}>GitHub-style Contribution Chart</Text>
+          <View style={styles.contributionContainer}>
+            <ContributionChart
+              data={contributionData}
+              height={200}
+              cellSize={14}
+              cellSpacing={2}
+              cellBorderRadius={2}
+              showLabels={true}
+              showTooltip={true}
+              tooltipFormatter={(value, date) => `${value} contributions on ${date}`}
+              emptyColor="#ebedf0"
+              colorScale={['#9be9a8', '#40c463', '#30a14e', '#216e39']}
+              thresholds={[1, 5, 10]}
+              animated={true}
+              animationDuration={1500}
+              showMonthLabels={true}
+              showDayLabels={true}
+              weeksToShow={52}
+              onCellPress={(item, index) => {
+                console.log(`Cell ${index} pressed with value ${item.value} on ${item.date}`);
+              }}
+            />
+          </View>
+
+          <Text style={styles.title}>Custom Contribution Chart (Purple Theme)</Text>
+          <View style={styles.contributionContainer}>
+            <ContributionChart
+              data={patternContributionData}
+              height={200}
+              cellSize={12}
+              cellSpacing={3}
+              cellBorderRadius={6}
+              showLabels={true}
+              showTooltip={true}
+              tooltipFormatter={(value, date) => `${value} activities on ${date}`}
+              emptyColor="#f0ebfd"
+              colorScale={['#d4bffc', '#b794f6', '#9061f9', '#6d28d9']}
+              thresholds={[1, 5, 10]}
+              animated={true}
+              animationDuration={1800}
+              showMonthLabels={true}
+              showDayLabels={true}
+              weeksToShow={26}
+              onCellPress={(item, index) => {
+                console.log(`Activity cell ${index} pressed with value ${item.value} on ${item.date}`);
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -508,5 +640,9 @@ const styles = StyleSheet.create({
     height: 400,
     marginVertical: 20,
     alignItems: 'center',
+  },
+  contributionContainer: {
+    height: 250,
+    marginVertical: 20,
   },
 });

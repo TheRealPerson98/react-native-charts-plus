@@ -36,6 +36,7 @@ yarn add react-native-charts-plus
 - **Radar Chart**: Spider/radar charts for multi-variable data visualization
 - **Bubble Chart**: X-Y coordinate bubbles with size as third dimension
 - **Gauge Chart**: Semi-circular gauge/dial for displaying a single value
+- **Contribution Chart**: GitHub-style contribution grid for visualizing activity over time
 
 ## Components
 
@@ -385,6 +386,75 @@ const MyGaugeChart = () => {
 };
 ```
 
+### ContributionChart
+
+A component that displays a GitHub-style contribution grid, showing activity patterns over time.
+
+```jsx
+import { ContributionChart } from 'react-native-charts-plus';
+
+// Example usage
+const MyContributionChart = () => {
+  // Generate sample data for the past year
+  const generateSampleData = () => {
+    const data = [];
+    const today = new Date();
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(today.getFullYear() - 1);
+    
+    // Loop through each day in the past year
+    for (let d = new Date(oneYearAgo); d <= today; d.setDate(d.getDate() + 1)) {
+      // Generate a random value (0-15) with higher probability of lower values
+      const rand = Math.random();
+      let value = 0;
+      
+      if (rand > 0.6) value = Math.floor(Math.random() * 5) + 1; // 1-5 (40% chance)
+      if (rand > 0.85) value = Math.floor(Math.random() * 5) + 5; // 5-10 (15% chance)
+      if (rand > 0.95) value = Math.floor(Math.random() * 5) + 10; // 10-15 (5% chance)
+      
+      // Format the date as YYYY-MM-DD
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const dateString = `${year}-${month}-${day}`;
+      
+      data.push({
+        value,
+        date: dateString,
+      });
+    }
+    
+    return data;
+  };
+
+  const data = generateSampleData();
+
+  return (
+    <ContributionChart
+      data={data}
+      height={200}
+      cellSize={14}
+      cellSpacing={2}
+      cellBorderRadius={2}
+      showLabels={true}
+      showTooltip={true}
+      tooltipFormatter={(value, date) => `${value} contributions on ${date}`}
+      emptyColor="#ebedf0"
+      colorScale={['#9be9a8', '#40c463', '#30a14e', '#216e39']}
+      thresholds={[1, 5, 10]}
+      animated={true}
+      animationDuration={1500}
+      showMonthLabels={true}
+      showDayLabels={true}
+      weeksToShow={52}
+      onCellPress={(item, index) => {
+        console.log(`Cell ${index} pressed with value ${item.value} on ${item.date}`);
+      }}
+    />
+  );
+};
+```
+
 ## Props
 
 Each chart component accepts a variety of props to customize its appearance and behavior. Please refer to the TypeScript definitions for a complete list of available props.
@@ -451,9 +521,15 @@ interface GaugeChartDataPoint {
   valueColor?: string;
 }
 
+interface ContributionDataPoint {
+  value: number;
+  date: string;
+  color?: string;
+}
+
 // Props interfaces are also available for each chart type:
 // BarChartProps, PercentageBarChartProps, PieChartProps, RingChartProps,
-// LineChartProps, RadarChartProps, BubbleChartProps, GaugeChartProps
+// LineChartProps, RadarChartProps, BubbleChartProps, GaugeChartProps, ContributionChartProps
 ```
 
 ## License

@@ -351,3 +351,35 @@ export interface GaugeChartProps {
   centerLabelBorderRadius?: number;
   onPress?: (item: GaugeChartDataPoint) => void;
 }
+
+export interface ContributionDataPoint {
+  value: number;
+  date: string;
+  color?: string;
+}
+
+export interface ContributionChartProps {
+  data: ContributionDataPoint[];
+  width?: number;
+  height?: number;
+  cellSize?: number;
+  cellSpacing?: number;
+  cellBorderRadius?: number;
+  showLabels?: boolean;
+  showTooltip?: boolean;
+  tooltipFormatter?: (value: number, date: string) => string;
+  style?: ViewStyle;
+  labelStyle?: TextStyle;
+  tooltipStyle?: TextStyle;
+  emptyColor?: string;
+  colorScale?: string[];
+  thresholds?: number[];
+  animated?: boolean;
+  animationDuration?: number;
+  onCellPress?: (item: ContributionDataPoint, index: number) => void;
+  monthLabelStyle?: TextStyle;
+  dayLabelStyle?: TextStyle;
+  showMonthLabels?: boolean;
+  showDayLabels?: boolean;
+  weeksToShow?: number;
+}

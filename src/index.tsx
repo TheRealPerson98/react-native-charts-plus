@@ -1,3 +1,5 @@
+import type { ContributionDataPoint } from './types';
+
 export function multiply(a: number, b: number): number {
   return a * b;
 }
@@ -10,6 +12,7 @@ export { RingChart } from './components/RingChart';
 export { RadarChart } from './components/RadarChart';
 export { GaugeChart } from './components/GaugeChart';
 export { BubbleChart } from './components/BubbleChart';
+export { ContributionChart } from './components/ContributionChart';
 export type {
   BarChartProps,
   DataPoint,
@@ -25,6 +28,8 @@ export type {
   GaugeChartProps,
   BubbleChartDataPoint,
   BubbleChartProps,
+  ContributionDataPoint,
+  ContributionChartProps,
 } from './types';
 
 // Example usage
@@ -388,6 +393,72 @@ export const BubbleChartExample = () => {
       verticalLines: 5,
       onBubblePress: (_item: any, _index: number) => {
         // Log bubble press event
+      },
+    },
+  };
+};
+
+// Example usage for ContributionChart
+export const ContributionChartExample = () => {
+  // Generate sample data for the past year
+  const generateSampleData = () => {
+    const data = [];
+    const today = new Date();
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(today.getFullYear() - 1);
+
+    // Loop through each day in the past year
+    for (let d = new Date(oneYearAgo); d <= today; d.setDate(d.getDate() + 1)) {
+      // Generate a random value (0-15) with higher probability of lower values
+      const rand = Math.random();
+      let value = 0;
+
+      if (rand > 0.6) value = Math.floor(Math.random() * 5) + 1; // 1-5 (40% chance)
+      if (rand > 0.85) value = Math.floor(Math.random() * 5) + 5; // 5-10 (15% chance)
+      if (rand > 0.95) value = Math.floor(Math.random() * 5) + 10; // 10-15 (5% chance)
+
+      // Format the date as YYYY-MM-DD
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const dateString = `${year}-${month}-${day}`;
+
+      data.push({
+        value,
+        date: dateString,
+      });
+    }
+
+    return data;
+  };
+
+  const data = generateSampleData();
+
+  return {
+    component: 'ContributionChart',
+    props: {
+      data,
+      height: 200,
+      cellSize: 14,
+      cellSpacing: 2,
+      cellBorderRadius: 2,
+      showLabels: true,
+      showTooltip: true,
+      tooltipFormatter: (value: number, date: string) =>
+        `${value} contributions on ${date}`,
+      emptyColor: '#ebedf0',
+      colorScale: ['#9be9a8', '#40c463', '#30a14e', '#216e39'],
+      thresholds: [1, 5, 10],
+      animated: true,
+      animationDuration: 1500,
+      showMonthLabels: true,
+      showDayLabels: true,
+      weeksToShow: 52,
+      onCellPress: (item: ContributionDataPoint, index: number) => {
+        // Log cell press event
+        console.log(
+          `Cell ${index} pressed with value ${item.value} on ${item.date}`
+        );
       },
     },
   };
