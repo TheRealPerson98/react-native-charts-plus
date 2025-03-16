@@ -43,6 +43,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
+    "git-commit": "git commit -m",
     "release": "release-it"
   },
   "keywords": [
