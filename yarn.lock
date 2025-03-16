@@ -1885,16 +1885,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@evilmartians/lefthook@npm:^1.5.0":
-  version: 1.11.3
-  resolution: "@evilmartians/lefthook@npm:1.11.3"
-  bin:
-    lefthook: bin/index.js
-  checksum: 6fe9ccc112696906abff3de18bc1ffdccb51894c43c7506d7178aacac57ecbb76f15165d04b0dfa46c37303325fae9de5b4b7b38a6510d4e0b8727a0ccccca73
-  conditions: (os=darwin | os=linux | os=win32) & (cpu=x64 | cpu=arm64 | cpu=ia32)
-  languageName: node
-  linkType: hard
-
 "@expo/bunyan@npm:^4.0.0":
   version: 4.0.1
   resolution: "@expo/bunyan@npm:4.0.1"
@@ -11924,7 +11914,6 @@ __metadata:
   resolution: "react-native-charts-plus@workspace:."
   dependencies:
     "@commitlint/config-conventional": ^17.0.2
-    "@evilmartians/lefthook": ^1.5.0
     "@react-native/eslint-config": ^0.73.1
     "@release-it/conventional-changelog": ^9.0.2
     "@types/d3-shape": ^3.1.7
