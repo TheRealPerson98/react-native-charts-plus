@@ -1,6 +1,6 @@
 {
   "name": "react-native-charts-plus",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "A beautiful and customizable chart library for React Native with support for various chart types",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
