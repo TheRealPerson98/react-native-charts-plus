@@ -1,6 +1,6 @@
 {
   "name": "react-native-charts-plus",
-  "version": "0.4.3",
+  "version": "1.0.1",
   "description": "A beautiful and customizable chart library for React Native with support for various chart types",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -53,14 +53,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheRealPerson98/react-native-charts-plus.git"
+    "url": "git+https://github.com/thejacedev/react-native-charts-plus.git"
   },
-  "author": "Jace Sleeman <Person98@Person98.com> (https://github.com/TheRealPerson98)",
+  "author": "Jace Sleeman <Person98@Person98.com> (https://github.com/thejacedev)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheRealPerson98/react-native-charts-plus/issues"
+    "url": "https://github.com/thejacedev/react-native-charts-plus/issues"
   },
-  "homepage": "https://github.com/TheRealPerson98/react-native-charts-plus#readme",
+  "homepage": "https://github.com/thejacedev/react-native-charts-plus#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

@@ -2,8 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/react-native-charts-plus.svg)](https://www.npmjs.com/package/react-native-charts-plus)
 [![npm downloads](https://img.shields.io/npm/dm/react-native-charts-plus.svg)](https://www.npmjs.com/package/react-native-charts-plus)
-[![license](https://img.shields.io/github/license/TheRealPerson98/react-native-charts-plus.svg)](https://github.com/TheRealPerson98/react-native-charts-plus/blob/main/LICENSE)
-[![platform](https://img.shields.io/badge/platform-ios%20%7C%20android-blue.svg)](https://github.com/TheRealPerson98/react-native-charts-plus)
+[![license](https://img.shields.io/github/license/thejacedev/react-native-charts-plus.svg)](https://github.com/thejacedev/react-native-charts-plus/blob/main/LICENSE)
+[![platform](https://img.shields.io/badge/platform-ios%20%7C%20android-blue.svg)](https://github.com/thejacedev/react-native-charts-plus)
 A beautiful, easy-to-use chart library for React Native applications.
 
 Created by Jace Sleeman | Person98 LLC
@@ -401,29 +401,29 @@ const MyContributionChart = () => {
     const today = new Date();
     const oneYearAgo = new Date(today);
     oneYearAgo.setFullYear(today.getFullYear() - 1);
-    
+
     // Loop through each day in the past year
     for (let d = new Date(oneYearAgo); d <= today; d.setDate(d.getDate() + 1)) {
       // Generate a random value (0-15) with higher probability of lower values
       const rand = Math.random();
       let value = 0;
-      
+
       if (rand > 0.6) value = Math.floor(Math.random() * 5) + 1; // 1-5 (40% chance)
       if (rand > 0.85) value = Math.floor(Math.random() * 5) + 5; // 5-10 (15% chance)
       if (rand > 0.95) value = Math.floor(Math.random() * 5) + 10; // 10-15 (5% chance)
-      
+
       // Format the date as YYYY-MM-DD
       const year = d.getFullYear();
       const month = String(d.getMonth() + 1).padStart(2, '0');
       const day = String(d.getDate()).padStart(2, '0');
       const dateString = `${year}-${month}-${day}`;
-      
+
       data.push({
         value,
         date: dateString,
       });
     }
-    
+
     return data;
   };
 
